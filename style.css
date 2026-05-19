@@ -252,7 +252,7 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
     color: var(--accent2);
 }
 
-/*  Hero Visual — orbiting planet */
+/*  Hero Visual - orbiting planet */
 .hero-visual {
     position: relative;
     width: 260px;
