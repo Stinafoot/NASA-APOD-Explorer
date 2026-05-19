@@ -2,19 +2,19 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --space:      #050a14;
-    --space-mid:  #0a1628;
-    --space-card: #0e1e35;
-    --space-rim:  #162844;
-    --accent:     #e8b84b;       /* warm gold — like starlight */
-    --accent2:    #4ba3e8;       /* nebula blue */
-    --accent3:    #e84b8a;       /* hot pink — emission nebula */
-    --white:      #f0f4ff;
-    --muted:      #6a84a8;
+    --space:      #0d0814;
+    --space-mid:  #160d24;
+    --space-card: #1e1030;
+    --space-rim:  #2e1a48;
+    --accent:     #e87dd4;       /* hot pink */
+    --accent2:    #b57bee;       /* soft purple */
+    --accent3:    #f0a8e0;       /* light blush pink */
+    --white:      #fdf0ff;
+    --muted:      #9070a8;
     --font-head:  'Syne', sans-serif;
     --font-mono:  'Space Mono', monospace;
     --radius:     12px;
-    --glow:       0 0 40px rgba(232,184,75,0.15);
+    --glow:       0 0 40px rgba(232,125,212,0.15);
 }
 
 html { scroll-behavior: smooth; }
@@ -33,7 +33,7 @@ body {
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 /* All content above canvas */
@@ -42,9 +42,9 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 /*  Header  */
 .site-header {
     padding: 20px 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(232,125,212,0.08);
     backdrop-filter: blur(12px);
-    background: rgba(5,10,20,0.6);
+    background: rgba(13,8,20,0.7);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -116,7 +116,7 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 .github-link:hover {
     border-color: var(--accent);
     color: var(--accent);
-    background: rgba(232,184,75,0.07);
+    background: rgba(232,125,212,0.07);
 }
 
 /*  Hero  */
@@ -210,8 +210,8 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
     display: flex;
     align-items: center;
     gap: 10px;
-    background: var(--accent);
-    color: var(--space);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #0d0814;
     border: none;
     border-radius: var(--radius);
     font-family: var(--font-head);
@@ -224,9 +224,9 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 }
 
 #load-btn:hover {
-    background: #f0c95c;
+    filter: brightness(1.12);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(232,184,75,0.35);
+    box-shadow: 0 8px 28px rgba(232,125,212,0.4);
 }
 
 #load-btn:active { transform: translateY(0); }
@@ -268,9 +268,9 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
     transform: translate(-50%,-50%);
 }
 
-.ring-1 { width: 260px; height: 260px; border-color: rgba(232,184,75,0.12); animation: spin 28s linear infinite; }
-.ring-2 { width: 190px; height: 190px; border-color: rgba(75,163,232,0.1);  animation: spin 18s linear infinite reverse; }
-.ring-3 { width: 120px; height: 120px; border-color: rgba(232,75,138,0.1);  animation: spin 10s linear infinite; }
+.ring-1 { width: 260px; height: 260px; border-color: rgba(232,125,212,0.15); animation: spin 28s linear infinite; }
+.ring-2 { width: 190px; height: 190px; border-color: rgba(181,123,238,0.12); animation: spin 18s linear infinite reverse; }
+.ring-3 { width: 120px; height: 120px; border-color: rgba(240,168,224,0.1);  animation: spin 10s linear infinite; }
 
 .planet {
     position: absolute;
@@ -278,8 +278,8 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
     transform: translate(-50%,-50%);
     width: 64px; height: 64px;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #4ba3e8, #0a2040);
-    box-shadow: 0 0 40px rgba(75,163,232,0.4), inset -8px -8px 16px rgba(0,0,0,0.4);
+    background: radial-gradient(circle at 35% 35%, #e87dd4, #3a0860);
+    box-shadow: 0 0 40px rgba(232,125,212,0.45), inset -8px -8px 16px rgba(0,0,0,0.4);
 }
 
 /* Small orbiting moon */
@@ -287,11 +287,11 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
     content: '';
     position: absolute;
     width: 10px; height: 10px;
-    background: var(--accent);
+    background: var(--accent2);
     border-radius: 50%;
     top: -5px; left: 50%;
     transform: translateX(-50%);
-    box-shadow: 0 0 12px var(--accent);
+    box-shadow: 0 0 12px var(--accent2);
 }
 
 @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
@@ -385,7 +385,7 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
-    border: 1px solid rgba(232,184,75,0.25);
+    border: 1px solid rgba(232,125,212,0.28);
     padding: 4px 12px;
     border-radius: 20px;
 }
@@ -441,7 +441,7 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 .media-shimmer {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(232,125,212,0.04) 50%, transparent 100%);
     background-size: 200% 100%;
     animation: shimmer 2s ease infinite;
     pointer-events: none;
@@ -476,7 +476,7 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 .apod-explanation {
     font-size: 14px;
     line-height: 1.85;
-    color: #a0b8d0;
+    color: #c0a8d8;
 }
 
 .info-right {
@@ -510,8 +510,8 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 .hd-btn {
     display: block;
     text-align: center;
-    background: rgba(75,163,232,0.1);
-    border: 1px solid rgba(75,163,232,0.3);
+    background: rgba(181,123,238,0.1);
+    border: 1px solid rgba(181,123,238,0.3);
     color: var(--accent2);
     text-decoration: none;
     font-family: var(--font-mono);
@@ -523,7 +523,7 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 }
 
 .hd-btn:hover {
-    background: rgba(75,163,232,0.18);
+    background: rgba(181,123,238,0.18);
     border-color: var(--accent2);
     transform: translateY(-2px);
 }
@@ -532,7 +532,7 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 .site-footer {
     text-align: center;
     padding: 32px 20px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(232,125,212,0.08);
     font-size: 11px;
     color: var(--muted);
     letter-spacing: 0.04em;
