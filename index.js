@@ -1,18 +1,4 @@
-/**
- * NASA APOD Explorer
- * Part of: 100 JavaScript Projects by @pradipchaudhary
- * GitHub: https://github.com/pradipchaudhary/100-js-projects
- *
- * Concepts covered:
- *  - Fetch API & async/await
- *  - DOM manipulation
- *  - Date handling
- *  - Error handling
- *  - LocalStorage caching
- *  - Canvas animation (starfield)
- */
-
-// ── Config ────────────────────────────────────────────────────────────────
+//  Config 
 // Using NASA's DEMO_KEY (rate-limited). Replace with your own from https://api.nasa.gov
 const API_KEY   = "DEMO_KEY";
 const BASE_URL  = "https://api.nasa.gov/planetary/apod";
@@ -59,7 +45,7 @@ const CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
     draw();
 })();
 
-// ── DOM refs ──────────────────────────────────────────────────────────────
+//  DOM refs 
 const loadBtn        = document.getElementById("load-btn");
 const loadingEl      = document.getElementById("loading");
 const errorState     = document.getElementById("error-state");
@@ -78,10 +64,10 @@ const hdLink         = document.getElementById("hd-link");
 const mediaShimmer   = document.getElementById("media-shimmer");
 const dateInput      = document.getElementById("apod-date");
 
-// ── Set default date to today ─────────────────────────────────────────────
+// Set default date to today 
 dateInput.value = getTodayString();
 
-// ── Load APOD ─────────────────────────────────────────────────────────────
+// Load APOD 
 async function loadAPOD() {
     const date = dateInput.value || getTodayString();
 
@@ -118,7 +104,7 @@ async function loadAPOD() {
     }
 }
 
-// ── Load Random ───────────────────────────────────────────────────────────
+// Load Random 
 async function loadRandom() {
     setState("loading");
 
@@ -168,7 +154,7 @@ function renderAPOD(data) {
         apodImg.classList.add("hidden");
         apodVideoWrap.classList.remove("hidden");
 
-        // Convert YouTube watch URL → embed URL if needed
+        // Convert YouTube watch URL 
         const embedUrl = url.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/");
         apodVideo.src = embedUrl;
         mediaShimmer.classList.remove("active");
@@ -194,7 +180,7 @@ function renderAPOD(data) {
     setState("result");
 }
 
-// ── State machine ─────────────────────────────────────────────────────────
+// State machine 
 function setState(state) {
     loadingEl.classList.add("hidden");
     errorState.classList.add("hidden");
@@ -214,7 +200,7 @@ function clearError() {
     setState("idle");
 }
 
-// ── Cache (localStorage) ──────────────────────────────────────────────────
+// Cache (localStorage) 
 function setCache(date, data) {
     try {
         localStorage.setItem(`apod_${date}`, JSON.stringify({ data, ts: Date.now() }));
@@ -234,9 +220,9 @@ function getCache(date) {
     } catch (_) { return null; }
 }
 
-// ── Date utilities ────────────────────────────────────────────────────────
+// Date utilities 
 function getTodayString() {
-    // Returns YYYY-MM-DD in local time (not UTC)
+    // Returns YYYY-MM-DD in local time 
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
@@ -254,12 +240,12 @@ function formatDate(dateStr) {
     });
 }
 
-// ── Keyboard shortcut: Enter = Load ──────────────────────────────────────
+// Keyboard shortcut: Enter = Load 
 dateInput.addEventListener("keydown", e => {
     if (e.key === "Enter") loadAPOD();
 });
 
-// ── Auto-load today's APOD on page load ──────────────────────────────────
+// Auto-load today's APOD on page load 
 window.addEventListener("DOMContentLoaded", () => {
     loadAPOD();
 });
