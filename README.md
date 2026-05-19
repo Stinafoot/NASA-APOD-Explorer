@@ -1,6 +1,6 @@
 # NASA APOD Explorer
 
-> **Project #XX** from [100 JavaScript Projects](https://github.com/pradipchaudhary/100-js-projects) by [@pradipchaudhary](https://github.com/pradipchaudhary)
+> **Project #38** from [100 JavaScript Projects](https://github.com/pradipchaudhary/100-js-projects) by [@pradipchaudhary](https://github.com/pradipchaudhary)
 
 Explore NASA's **Astronomy Picture of the Day**. Every day since June 16, 1995, NASA has published one stunning image of our cosmos alongside a professional astronomer's explanation. This project lets you browse any date, get surprised by a random entry, and view high-definition versions of every image.
 
