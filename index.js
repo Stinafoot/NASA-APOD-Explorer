@@ -1,10 +1,10 @@
-//  Config 
+// Config
 // Using NASA's DEMO_KEY (rate-limited). Replace with your own from https://api.nasa.gov
 const API_KEY   = "DEMO_KEY";
 const BASE_URL  = "https://api.nasa.gov/planetary/apod";
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
 
-// ── Starfield ─────────────────────────────────────────────────────────────
+// Starfield
 (function initStarfield() {
     const canvas = document.getElementById("starfield");
     const ctx    = canvas.getContext("2d");
@@ -16,14 +16,23 @@ const CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
         buildStars();
     }
 
+    const starColors = [
+        [253, 240, 255],
+        [232, 125, 212],
+        [181, 123, 238],
+        [240, 168, 224],
+        [220, 200, 255],
+    ];
+
     function buildStars() {
-        stars = Array.from({ length: 200 }, () => ({
+        stars = Array.from({ length: 220 }, () => ({
             x:     Math.random() * canvas.width,
             y:     Math.random() * canvas.height,
             r:     Math.random() * 1.4 + 0.2,
             alpha: Math.random(),
             speed: Math.random() * 0.008 + 0.002,
             phase: Math.random() * Math.PI * 2,
+            color: starColors[Math.floor(Math.random() * starColors.length)],
         }));
     }
 
@@ -34,7 +43,7 @@ const CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
             const a = 0.3 + 0.7 * Math.abs(Math.sin(t * s.speed + s.phase));
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(240,244,255,${a})`;
+            ctx.fillStyle = `rgba(${s.color[0]},${s.color[1]},${s.color[2]},${a})`;
             ctx.fill();
         }
         requestAnimationFrame(draw);
@@ -45,7 +54,7 @@ const CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
     draw();
 })();
 
-//  DOM refs 
+// DOM refs
 const loadBtn        = document.getElementById("load-btn");
 const loadingEl      = document.getElementById("loading");
 const errorState     = document.getElementById("error-state");
@@ -64,10 +73,10 @@ const hdLink         = document.getElementById("hd-link");
 const mediaShimmer   = document.getElementById("media-shimmer");
 const dateInput      = document.getElementById("apod-date");
 
-// Set default date to today 
+// Set default date to today
 dateInput.value = getTodayString();
 
-// Load APOD 
+// Load APOD
 async function loadAPOD() {
     const date = dateInput.value || getTodayString();
 
@@ -104,7 +113,7 @@ async function loadAPOD() {
     }
 }
 
-// Load Random 
+// Load Random
 async function loadRandom() {
     setState("loading");
 
@@ -124,7 +133,7 @@ async function loadRandom() {
     }
 }
 
-// ── Render ────────────────────────────────────────────────────────────────
+// Render
 function renderAPOD(data) {
     const { title, date, copyright, explanation, media_type,
             url, hdurl, thumbnail_url } = data;
@@ -154,7 +163,7 @@ function renderAPOD(data) {
         apodImg.classList.add("hidden");
         apodVideoWrap.classList.remove("hidden");
 
-        // Convert YouTube watch URL 
+        // Convert YouTube watch URL to embed URL if needed
         const embedUrl = url.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/");
         apodVideo.src = embedUrl;
         mediaShimmer.classList.remove("active");
@@ -180,7 +189,7 @@ function renderAPOD(data) {
     setState("result");
 }
 
-// State machine 
+// State machine
 function setState(state) {
     loadingEl.classList.add("hidden");
     errorState.classList.add("hidden");
@@ -200,11 +209,11 @@ function clearError() {
     setState("idle");
 }
 
-// Cache (localStorage) 
+// Cache (localStorage)
 function setCache(date, data) {
     try {
         localStorage.setItem(`apod_${date}`, JSON.stringify({ data, ts: Date.now() }));
-    } catch (_) { /* Storage full — skip */ }
+    } catch (_) { /* Storage full - skip */ }
 }
 
 function getCache(date) {
@@ -220,9 +229,9 @@ function getCache(date) {
     } catch (_) { return null; }
 }
 
-// Date utilities 
+// Date utilities
 function getTodayString() {
-    // Returns YYYY-MM-DD in local time 
+    // Returns YYYY-MM-DD in local time (not UTC)
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
@@ -240,12 +249,12 @@ function formatDate(dateStr) {
     });
 }
 
-// Keyboard shortcut: Enter = Load 
+// Keyboard shortcut: Enter = Load
 dateInput.addEventListener("keydown", e => {
     if (e.key === "Enter") loadAPOD();
 });
 
-// Auto-load today's APOD on page load 
+// Auto-load today's APOD on page load
 window.addEventListener("DOMContentLoaded", () => {
     loadAPOD();
 });
