@@ -26,6 +26,7 @@ Explore NASA's **Astronomy Picture of the Day**. Every day since June 16, 1995, 
 | Error handling | Friendly messages for invalid dates, rate limits, and network failures |
 | Animated starfield | Canvas-based twinkling star background |
 | Responsive | Works on mobile, tablet, and desktop |
+| Unit tested | 30+ tests covering all utility functions and DOM behavior |
 
 ---
 
@@ -40,6 +41,7 @@ This project is a great exercise for the following concepts:
 - **`localStorage` caching** - storing API responses with a TTL to avoid rate limiting
 - **Canvas API** - procedural starfield animation using `requestAnimationFrame`
 - **Event Handling** - button clicks, keyboard shortcuts (`Enter` to load), and `onload`/`onerror` on images
+- **Unit Testing** - Jest test suite covering pure functions and DOM behavior with jsdom
 
 ---
 
@@ -52,6 +54,7 @@ This project is a great exercise for the following concepts:
 | Vanilla JavaScript (ES6+) | All app logic, no frameworks |
 | [NASA APOD API](https://api.nasa.gov) | Source of all astronomy data |
 | Google Fonts | `Syne` (headings) + `Space Mono` (body/mono) |
+| Jest + jsdom | Unit testing |
 
 ---
 
@@ -59,11 +62,113 @@ This project is a great exercise for the following concepts:
 
 ```
 nasa-apod-explorer/
-├── index.html      # App markup
-├── style.css       # All styling (dark cosmic theme)
-├── index.js        # App logic: fetch, render, cache, starfield
-└── README.md       # This file
+├── index.html          # App markup
+├── style.css           # All styling (pink/purple space theme)
+├── index.js            # App logic: fetch, render, cache, starfield
+├── tests/
+│   └── apod.test.js    # Unit tests (Jest + jsdom)
+├── package.json        # Dev dependencies (jest, jest-environment-jsdom)
+└── README.md           # This file
 ```
+
+---
+
+## Running the Tests
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run the test suite
+
+```bash
+npx jest
+```
+
+### Run with coverage report
+
+```bash
+npx jest --coverage
+```
+
+### Expected output
+
+```
+PASS tests/apod.test.js
+  getTodayString
+    - returns a string in YYYY-MM-DD format
+    - year is current year
+    - month is between 01 and 12
+    - day is between 01 and 31
+  isValidDate
+    - accepts the first APOD date (1995-06-16)
+    - accepts today
+    - accepts a known historical date
+    - rejects a date before APOD launched (1995-06-15)
+    - rejects a future date
+    - rejects an empty string
+    - rejects a non-date string
+  formatDate
+    - returns a non-empty string
+    - includes the year
+    - includes the full month name
+    - includes the day number
+    - includes the weekday name
+    - noon anchor prevents off-by-one timezone errors
+  buildEmbedUrl
+    - converts watch?v= URL to embed URL
+    - converts youtu.be short URL to embed URL
+    - leaves a plain image URL unchanged
+    - leaves an already-embedded URL unchanged
+  setCache and getCache
+    - setCache stores data retrievable by getCache
+    - getCache returns null for a key that was never set
+    - getCache returns null after cache entry expires
+    - getCache removes the expired key from localStorage
+    - getCache returns null for corrupted JSON
+    - different dates are cached independently
+    - setCache overwrites existing entry for same date
+  setState (DOM)
+    - loading state shows loading and hides others
+    - result state shows result and hides others
+    - error state shows error and hides others
+    - idle/unknown state hides all panels
+  renderAPOD (DOM)
+    - sets the result title text
+    - sets the explanation text
+    - sets stat-type to Image for image media
+    - sets stat-type to Video for video media
+    - shows HD link when hdurl is present
+    - hides HD link when hdurl is absent
+    - sets correct href on HD link
+    - shows image and hides video wrap for image media
+    - shows video wrap and hides image for video media
+    - sets YouTube embed URL on the iframe
+    - shows copyright when present
+    - shows empty copyright when absent
+    - stat-hd is Yes when hdurl is present
+    - stat-hd is No when hdurl is absent
+
+Tests: 43 passed, 43 total
+```
+
+---
+
+## What the Tests Cover
+
+| Group | What is tested |
+|---|---|
+| `getTodayString` | Format, year, month range, day range |
+| `isValidDate` | Boundary dates, future dates, empty/invalid input |
+| `formatDate` | Year, month name, day, weekday, timezone safety |
+| `buildEmbedUrl` | YouTube watch URL, youtu.be short URL, non-YouTube URLs |
+| `setCache / getCache` | Round-trip storage, missing keys, TTL expiry, key removal, corrupt JSON, independent keys, overwrite |
+| `setState` | All four states (loading, result, error, idle) show/hide correct panels |
+| `renderAPOD` | Title, explanation, copyright, stat cards, HD link visibility and href, image vs. video media switching, embed URL conversion |
+
+---
 
 ---
 
@@ -129,21 +234,7 @@ GET https://api.nasa.gov/planetary/apod
 
 ## Contributing
 
-This project is part of [@pradipchaudhary](https://github.com/pradipchaudhary)'s [100 JavaScript Projects](https://github.com/pradipchaudhary/100-js-projects) repository. To contribute:
-
-```bash
-# 1. Fork the repository
-# 2. Create your feature branch
-git checkout -b feature/your-improvement
-
-# 3. Commit and push
-git commit -m "Improve: description of change"
-git push origin feature/your-improvement
-
-# 4. Open a Pull Request
-```
-
-Please follow the [Contribution Guidelines](https://github.com/pradipchaudhary/100-js-projects/blob/main/CONTRIBUTING.md).
+This project is part of [@pradipchaudhary](https://github.com/pradipchaudhary)'s [100 JavaScript Projects](https://github.com/pradipchaudhary/100-js-projects) repository.
 
 ---
 
