@@ -198,6 +198,17 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
 
 .date-input:focus { border-color: var(--accent); }
 
+/* Grey out future dates - works in Chrome/Edge */
+.date-input::-webkit-calendar-picker-indicator {
+    filter: invert(0.6) sepia(1) saturate(3) hue-rotate(260deg) brightness(0.8);
+    cursor: pointer;
+}
+
+input[type="date"]:out-of-range {
+    color: var(--muted);
+    opacity: 0.4;
+}
+
 #load-btn {
     display: flex;
     align-items: center;

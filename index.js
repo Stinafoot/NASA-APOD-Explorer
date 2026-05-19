@@ -73,8 +73,9 @@ const hdLink         = document.getElementById("hd-link");
 const mediaShimmer   = document.getElementById("media-shimmer");
 const dateInput      = document.getElementById("apod-date");
 
-// Set default date to today
+// Set default date to today and lock future dates
 dateInput.value = getTodayString();
+dateInput.max   = getTodayString();
 
 // Load APOD
 async function loadAPOD() {
