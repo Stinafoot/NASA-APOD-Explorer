@@ -143,14 +143,6 @@ header, section, main, footer, .loading, .error-state { position: relative; z-in
     gap: 10px;
 }
 
-.hero-eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 28px;
-    height: 1px;
-    background: var(--accent);
-}
-
 .hero-title {
     font-family: var(--font-head);
     font-size: clamp(48px, 6vw, 80px);
